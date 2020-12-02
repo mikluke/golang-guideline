@@ -8,10 +8,6 @@ You're able to expore and use our techniques of managing go project. How organiz
 We described our vision how to write readable code which is scalable and performable. We don't teach how to get the most performable code, we're for readability.  
 Also you'll find some tricks which explain how to boost performance of your code without losing readability.
 
-## How to use it
-
-Just click [there](INDEX.md) and go.
-
 ## How to contribute
 
 This project is opened to contribution. Feel free to create pull requests but we have some [rules](rules/index.md) and you should follow it.
@@ -21,4 +17,11 @@ If you disagree with rules and have proposals feel free to create pull request o
 
 [Vladislav Mikitich](@mikluke)
 
-## Contributors
+## Index
+
+* [Rules](rules)
+  * [Structure](rules/structure)
+    * [Article](rules/structure/article)
+    * [Stream](rules/structure/stream)
+  * [Guidelines](guidelines)
+  * [Codestyle](codestyle)
