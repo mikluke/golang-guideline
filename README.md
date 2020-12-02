@@ -13,10 +13,6 @@ Also you'll find some tricks which explain how to boost performance of your code
 This project is opened to contribution. Feel free to create pull requests but we have some [rules](rules/index.md) and you should follow it.
 If you disagree with rules and have proposals feel free to create pull request or issue.
 
-## Maintainers
-
-[Vladislav Mikitich](https://github.com/mikluke)
-
 ## Index
 
 * [Rules](rules)
