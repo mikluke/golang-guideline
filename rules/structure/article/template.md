@@ -1,4 +1,4 @@
-# rules/structure/article/template
+# path/to/article
 
 ## Description
 

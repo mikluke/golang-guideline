@@ -7,11 +7,7 @@ This stream contains the rules for creating streams and articles
 | Term              | Explanation                                   |
 | ----------------- | --------------------------------------------- |
 | article | set of files with guideline, codestyle, advices and examples |
-| stream  | set of articles |
-
-## Description
-
-This stream explains how to manage streams and articles clean and properly.
+| stream  | set of articles or streams |
 
 ## Articles
 
