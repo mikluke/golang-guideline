@@ -15,7 +15,7 @@ If you disagree with rules and have proposals feel free to create pull request o
 
 ## Maintainers
 
-[Vladislav Mikitich](@mikluke)
+[Vladislav Mikitich](https://github.com/mikluke)
 
 ## Index
 

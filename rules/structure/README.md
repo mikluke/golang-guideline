@@ -11,10 +11,10 @@ This stream contains the rules for creating streams and articles
 
 ## Articles
 
-### [Stream](stream/index.md)
+### [Stream](stream)
 
 This article describes how stream should look
 
-### [Article](article/index.md)
+### [Article](article)
 
 This article describes how articles should look
