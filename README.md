@@ -1,37 +1,24 @@
-## Welcome to GitHub Pages
+# Go lang development codestyle and guideline
 
-You can use the [editor on GitHub](https://github.com/mikluke/golang-guideline/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+## Project mission
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+There are lots of engineers which use golang in the world, so we want to carry our knowledge and experience how to code perfect [go](https://golang.org) code as wide as we can.
 
-### Markdown
+You're able to expore and use our techniques of managing go project. How organize code, built an application, pack it into containers and others.  
+We described our vision how to write readable code which is scalable and performable. We don't teach how to get the most performable code, we're for readability.  
+Also you'll find some tricks which explain how to boost performance of your code without losing readability.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## How to use it
 
-```markdown
-Syntax highlighted code block
+Just click [there](INDEX.md) and go.
 
-# Header 1
-## Header 2
-### Header 3
+## How to contribute
 
-- Bulleted
-- List
+This project is opened to contribution. Feel free to create pull requests but we have some [rules](rules/index.md) and you should follow it.
+If you disagree with rules and have proposals feel free to create pull request or issue.
 
-1. Numbered
-2. List
+## Maintainers
 
-**Bold** and _Italic_ and `Code` text
+[Vladislav Mikitich](@mikluke)
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mikluke/golang-guideline/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Contributors
