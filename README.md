@@ -28,7 +28,7 @@ If you don't know how to do just ask any maintainer for help.
 
 ### Contributors
 
-[Konstantin Shafranski](https://github.com/kostassh)
+[Kanstantsin Shafranski](https://github.com/kostassh)
 
 ## Index
 
