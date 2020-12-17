@@ -2,22 +2,34 @@
 
 ## Project mission
 
-There are lots of engineers which use golang in the world, so we want to carry our knowledge and experience how to code perfect [go](https://golang.org) code as wide as we can.
+We are engineers who use [go](https://golang.org) for solving technical issues every day for a long time and we have strong experience in building performable, scalable, readable and, what's very important, simple applications with golang.
 
-You're able to expore and use our techniques of managing go project. How organize code, built an application, pack it into containers and others.  
-We described our vision how to write readable code which is scalable and performable. We don't teach how to get the most performable code, we're for readability.  
-Also you'll find some tricks which explain how to boost performance of your code without losing readability.
+We want to carry our expirience on to the world to see lots of simple probjects that solve complicated tasks and were written with go-style code (not java/ruby/php/c++/etc in go).
 
-## How to contribute
+Feel free to follow our guidelines/codestyle.
 
-This project is opened to contribution. Feel free to create pull requests but we have some [rules](rules/index.md) and you should follow it.
-If you disagree with rules and have proposals feel free to create pull request or issue.
+## Contributing
+
+If you want to contribute just follow next simple rules.
+
+### Follow style
+
+We don't fix any style of texting, but your codestyle or guideline should be consistent with others.
+
+### Use hierarchy
+
+Create new topics in appropriate directories. Name of the directory should present a domain which covers these topics.
+
+### Ask help
+
+If you don't know how to do just ask any maintainer for help.
+
+---
+
+### Contributors
+
+[Kanstantsin Shafranski](https://github.com/kostassh)
 
 ## Index
 
-* [Rules](rules)
-  * [Structure](rules/structure)
-    * [Article](rules/structure/article)
-    * [Stream](rules/structure/stream)
-  * [Guidelines](guidelines)
-  * [Codestyle](codestyle)
+- [Packaging](packaging)
