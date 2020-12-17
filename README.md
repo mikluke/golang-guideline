@@ -2,7 +2,7 @@
 
 ## Project mission
 
-We are engineers who use [go](https://golang.org) for solving technical issues every day for a long time and we have strong experience how to build performable, scalable readable, and, what's very important, simple applications with golang.
+We are engineers who use [go](https://golang.org) for solving technical issues every day for a long time and we have strong experience in building performable, scalable, readable and, what's very important, simple applications with golang.
 
 We want to carry our expirience on to the world to see lots of simple probjects that solve complicated tasks and were written with go-style code (not java/ruby/php/c++/etc in go).
 
