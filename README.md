@@ -18,7 +18,7 @@ We don't fix any style of texting, but your codestyle or guideline should be con
 
 ### Use hierarchy
 
-Create new topics in appropriate directories. Name of directory should present a domain which covers these topics.
+Create new topics in appropriate directories. Name of the directory should present a domain which covers these topics.
 
 ### Ask help
 
