@@ -28,12 +28,10 @@ If you don't know how to do just ask any maintainer for help.
 
 ### Contributors
 
-[Andrei Schneider](https://github.com/megaherz)
-[Kanstantsin Shafranski](https://github.com/kostassh)
-[Sasha Yakovtseva](https://github.com/sashayakovtseva)
-[Vadim Pisaruk](https://github.com/pisarukv)
-
-
+[Andrei Schneider](https://github.com/megaherz)  
+[Kanstantsin Shafranski](https://github.com/kostassh)  
+[Sasha Yakovtseva](https://github.com/sashayakovtseva)  
+[Vadim Pisaruk](https://github.com/pisarukv)  
 
 ## Index
 
