@@ -1,10 +1,12 @@
-# Packaging
+# Testing
 
 ## Index
 
 - [Why do we use tests](#why-do-we-use-tests?)
 - [Packaging](#packaging)
 - [Mocking](#mocking)
+- [Table driven tests](#table-driven-tests)
+- [Integration tests](#integration-tests)
 
 ## Topics
 
@@ -24,6 +26,7 @@ That process obliges you to code test first and after that code implementation. 
 
 ##### Maximal coverage
 - Critical code
+- Transport code
 - Business logic
 - Validation logic
 
@@ -108,7 +111,226 @@ If your code works with external objects(hid by interfaces), it's a very good id
 We suggest using [gomock](https://github.com/golang/mock) as tool for generating mocks.
 
 We strongly advise to follow next rules while using mocks:
-- Use one shared controller for all mock objects - it's possible with `gomock` and gives more opportunities)
+- Use one shared controller for all mock objects - it's possible with `gomock` and gives more opportunities
 - Define order of calls - changing the order of calls usually produces bugs
-- Use `Do` and `DoAndReturn` functions to do extra assertions or to get generated values (e.g generated ID)
+- Use `Do` and `DoAndReturn` functions to do extra assertions or to get generated values (e.g. generated ID)
 - Use gomock within different goroutines with caution
+
+### Table driven tests
+
+At almost all cases [table driven tests](https://github.com/golang/go/wiki/TableDrivenTests) are very useful.
+
+#### Conditions for using table driven tests
+
+- Test structure(input/output params and execution flow) is identical for every testcase
+- There are more than 2-3 testcases
+
+Examples:
+- validation tests
+- transport tests
+- utils tests
+
+#### Parameters
+
+There are 2 good ways to define input parameters: all-params-definition and option-applying.  
+Use most applicable to your function way, but you should always define output params for both ways.
+
+##### All parameters definition
+
+Define all parameters in test struct. Use this way when your function has a simple interface.
+
+```
+// function under test
+func deletePost(ctx context.Context, user uint64, id uint64) error
+```
+
+```
+// struct for table driven test
+
+tt := []struct{
+    // test name
+    name string
+    
+    // input params
+    ctx context.Context
+    user uint64
+    id uint64
+    
+    // will be returned by mock objects
+    storageErr error
+    producerErr error
+    
+    // output values
+    err error
+} {
+    {
+        name: "success",
+        ctx: context.Background(),
+        user: 1,
+        id: 2,
+        // you can omit next lines
+        storageErr: nil,
+        producerErr: nil,
+        err: nil
+    },
+}
+```
+
+##### Option applying
+
+Define default params object, copy and patch that to use in test (like with option pattern)  
+Very useful for functions with huge input structs.
+
+```
+// function under test
+func createPost(ctx context.Context, post service.Post) error
+```
+
+```
+// struct for table driven test
+
+type params struct {
+    // input params
+    ctx context.Context
+    user uint64
+    id uint64
+    title string
+}
+
+defaultParams := Params {
+    ctx: context.Background()
+    user: 1,
+    id: 2,
+    title: "title",
+}
+
+tt := []struct{
+    // test name
+    name string
+
+    // this func will return parameters for test  
+    getParams func() params
+        
+    // output values
+    err error
+} {
+    {
+        name: "success",
+        getParams: func() params {
+            p := defaultParams
+            p.title = ""
+            return p
+        },
+        err: nil
+    },
+}
+
+for i := range tt {
+    tc := tt[i]
+    t.Run(tc.name, func(t *testing.T) {
+        t.Parallel()
+        
+        params := tc.getParams()
+        
+        ...
+    })
+}
+```
+
+### Integration tests
+
+With [docker](https://www.docker.com), it is very easy to set up any service or database and run integration tests as unit tests.
+
+To speed up tests execution you can hide integration tests by build tag.  
+
+Example
+```
+//+build integration
+```
+
+#### Useful packages
+
+Use can use one of these libraries to start containers:
+
+- [dockertest](https://github.com/ory/dockertest)
+- [testcontainers](https://github.com/testcontainers/testcontainers-go)
+
+These packages are pretty same, so you can use any of it
+
+#### Wait while service is setting up
+
+Always define a [wait strategy](https://github.com/testcontainers/testcontainers-go/blob/master/wait/wait.go) to make your test determined.
+
+Example
+```
+req := testcontainers.ContainerRequest{
+		Image:        "postgres:12",
+		Env:          map[string]string{"POSTGRES_PASSWORD": "root"},
+		ExposedPorts: []string{"5432/tcp"},
+		WaitingFor:   wait.ForListeningPort("5432/tcp"),
+}
+```
+
+#### Clean environment
+
+We define two ways of keeping clean environment for integration tests:
+
+- cleaning up after every test (easy to implement, impossible to run parallel)
+- run tests in isolated environment (more complicated implementation) 
+
+##### Examples
+
+1) cleanUp func
+```
+func cleanUp(t *testing.T) {
+    _, err := db.ExecContext(ctx, `DELETE FROM post`)
+	require.NoError(t, err)
+	_, err = db.ExecContext(ctx, `DELETE FROM user`)
+	require.NoError(t, err)
+}
+
+func Test_GetUser(t *testing.T) {
+    defer cleanUp(t)
+    
+    // test implementation
+}
+```
+
+2) getDB func
+```
+func getDB(t *testing.T) {
+    return client.Database(fmt.Sprintf("%s-%d", t.Name(), rand.Int31())
+}
+
+func Test_SetPost(t *testing.T) {
+    s := NewStorage(getDB(t))        
+        
+    // test implementation
+
+}
+```
+
+3) isolated func
+```
+func isolated(t *testing.T, f func (db *mongo.Database)) {
+    db := client.Database(fmt.Sprintf("%s-%d", t.Name(), rand.Int31())
+   
+    f(db)
+   
+    if err := db.Drop(context.Background()); err != nil {
+        logrus.WithError(err).Fatal("failed to drop database")
+    }
+}
+
+func Test_SetPost(t *testing.T) {
+    isolated(func (db *mongo.Database) {
+        s := NewStorage(db)
+        
+        // test implementation
+    })
+}
+```
+
+#### Example
+
+You can find example [here](example/integration-test/storage_test.go)
