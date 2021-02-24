@@ -4,6 +4,7 @@
 
 - [Why do we use tests](#why-do-we-use-tests?)
 - [Packaging](#packaging)
+- [Formatting](#formatting)
 - [Mocking](#mocking)
 - [Table driven tests](#table-driven-tests)
 - [Integration tests](#integration-tests)
@@ -48,7 +49,7 @@ Definitely, you should cover your code with tests. If this looks like impossible
 
 #### What can I do if my manager says that writing tests is a very complicated business?
 
-You have to agree. Code covering by tests is the complicated business, but the manual testing is **more** complicated. After that you have to show reason why we should cover our code by tests. In the end, if it won't persuade your manager, just leave this place and get another job with smart management personnel. 
+You have to agree. Code covering by tests is the complicated business, but the manual testing is **more** complicated. After that you have to show reasons why we should cover our code by tests. In the end, if it won't persuade your manager, just leave this place and get another job with smart management personnel. 
 
 ### Packaging
 
@@ -61,10 +62,11 @@ serivice
 | - service_test.go
 ```
 
-If you need to use assets within tests put it into a `test` subdirectory
+#### Test data
+If you need to use assets within tests put it into a `testdata` subdirectory
 ```
 image
-| - test
+| - testdata
     | - image.png
 | - reader.go
 | - reader_test.go
@@ -104,6 +106,42 @@ storage
 Benefits:
 - Your code's clients can use mocked implementation for tests directly
 - Will be imported into the `vendor` directory
+
+### Formatting
+
+#### Avoid spaces in test names
+Output of `go test` replaces spaces with underscores and this way it will be more complicated to find failed test with `find in directory` IDE function.
+
+#### Do not number tests, use clarification postfix
+Use next template for test functions
+```
+Test{StructName}_{MethodName}_{Clarification}
+```
+  
+!Never name like this
+```
+TestService_GetUser2
+```
+
+#### Define constants
+If you use some specific data in several tests, define it before tests.
+
+Example
+```
+const specificAddr = "0x12345678910"
+var requestMetaData = MetaData {
+    IP: "1.2.3.4",
+    UserAgent: "hello! It's me!",
+    Cookie: []Cookie{...}
+    Headers: []Header{...},
+} 
+```
+
+#### Think twice if you need suites
+TestSuites can be useful but using this can make your code more complicated. Using [table driven tests](#table-driven-tests) should be enough at almost all cases.
+
+#### Use testify package
+Use testify [assert](https://github.com/stretchr/testify/tree/master/assert) and [require](https://github.com/stretchr/testify/tree/master/require) packages. It will make your tests more readable.
 
 ### Mocking
 
