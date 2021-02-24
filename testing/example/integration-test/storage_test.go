@@ -9,7 +9,7 @@ import (
 	"os"
 	"testing"
 
-	_ "github.com/lib/pq"
+	"github.com/jackc/pgx/v4"
 	"github.com/sirupsen/logrus"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
@@ -58,12 +58,12 @@ func setup() func() {
 
 	dsn := fmt.Sprintf("host=%s port=%d user=postgres password=root sslmode=disable", host, port.Int())
 
-	db, err = sql.Open("postgres", dsn)
+	db, err := pgx.Connect(context.Background(), dsn)
 	if err != nil {
 		logrus.WithError(err).Fatal("failed to open connection")
 	}
 
-	if err := db.Ping(); err != nil {
+	if err := db.Ping(context.Background()); err != nil {
 		logrus.WithError(err).Fatal("failed to ping postgres")
 	}
 
