@@ -45,7 +45,7 @@ That process obliges you to code test first and after that code implementation. 
 
 #### What should I do if my code is already done?
 
-Definitely, you should cover your code with tests. If this looks like impossible, revise your code' design. **Good designed code is always testable.** 
+Definitely, you should cover your code with tests. If this looks like impossible, revise your code' design. **Well-designed code is always testable.** 
 
 #### What can I do if my manager says that writing tests is a very complicated business?
 
