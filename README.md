@@ -36,3 +36,4 @@ If you don't know how to do just ask any maintainer for help.
 ## Index
 
 - [Packaging](packaging)
+- [Testing](testing)
