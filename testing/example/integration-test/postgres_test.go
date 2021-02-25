@@ -1,22 +1,20 @@
-//+build integration
-
 package postgres
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"os"
 	"testing"
 
 	"github.com/jackc/pgx/v4"
 	"github.com/sirupsen/logrus"
+	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
 var (
-	db  *sql.DB
+	db  *pgx.Conn
 	ctx = context.Background()
 )
 
@@ -58,7 +56,7 @@ func setup() func() {
 
 	dsn := fmt.Sprintf("host=%s port=%d user=postgres password=root sslmode=disable", host, port.Int())
 
-	db, err := pgx.Connect(context.Background(), dsn)
+	db, err = pgx.Connect(context.Background(), dsn)
 	if err != nil {
 		logrus.WithError(err).Fatal("failed to open connection")
 	}
@@ -78,16 +76,20 @@ func setup() func() {
 	return shutdownFn
 }
 
+func newPostgres(t *testing.T) *postgres {
+	t.Cleanup(func() {
+		// clean up your database there
+	})
+
+	return &postgres{db: db}
+}
+
 func migrate() {
 	// run your migrations there
 }
 
-func cleanup(t *testing.T) {
-	// refresh db state there
-}
-
 func TestPg_DoSomething(t *testing.T) {
-	defer cleanup(t)
+	p := newPostgres(t) // database will be cleaned after test execution
 
-	// test your DoSomething func
+	require.NoError(t, p.DoSomething())
 }

@@ -113,14 +113,15 @@ Benefits:
 Output of `go test` replaces spaces with underscores and this way it will be more complicated to find failed test with `find in directory` IDE function.
 
 #### Do not number tests, use clarification postfix
-Use next template for test functions
+Use next template for test functions  
+`Test{StructName}_{MethodName}_{Clarification}`  
+Example
 ```
-Test{StructName}_{MethodName}_{Clarification}
+TestUser_Validate_Empty
 ```
-  
-!Never name like this
+But not
 ```
-TestService_GetUser2
+TestUser_Validate2
 ```
 
 #### Define constants
@@ -318,17 +319,21 @@ We define two ways of keeping clean environment for integration tests:
 
 ##### Examples
 
-1) cleanUp func
+1) cleaning up after a test completion
 ```
-func cleanUp(t *testing.T) {
-    _, err := db.ExecContext(ctx, `DELETE FROM post`)
-	require.NoError(t, err)
-	_, err = db.ExecContext(ctx, `DELETE FROM user`)
-	require.NoError(t, err)
+func newPostgres(t *testing.T) {
+    t.CleanUp(func() {
+        _, err = db.ExecContext(ctx, `
+            DELETE FROM user;
+            ALTER SEQUENCE user_id_seq RESTART WITH 1;
+        `)
+    })
+    
+    return &postgres{db}
 }
 
 func Test_GetUser(t *testing.T) {
-    defer cleanUp(t)
+    p := newPostgres(t) // database will be cleaned up
     
     // test implementation
 }
