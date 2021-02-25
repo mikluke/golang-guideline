@@ -155,6 +155,31 @@ We strongly advise to follow next rules while using mocks:
 - Use `Do` and `DoAndReturn` functions to do extra assertions or to get generated values (e.g. generated ID)
 - Use gomock within different goroutines with caution
 
+### Configuring mock behaviour
+
+If a mock's behaviour is different for different test cases, you can set behaviour in table driven test's parameters
+
+```
+tt := struct {
+    name string
+    setupMock func(m *ObjectMock)
+} {
+    {
+        name: "success",
+        setupMock: func(m *ObjectMock) { m.EXPECT().DoNothing().Return(nil) }
+    },
+}
+
+for i := range tt {
+    tc := tt[i]
+    t.Run(tc.name, func(t *testing.T) {
+        ctrl := gomock.NewController()
+        m := object.NewObjectMock(ctrl)
+        tc.setupMock(m)
+    })
+}
+```
+
 ### Table driven tests
 
 At almost all cases [table driven tests](https://github.com/golang/go/wiki/TableDrivenTests) are very useful.
