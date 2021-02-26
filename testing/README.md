@@ -401,4 +401,4 @@ func Test_SetPost(t *testing.T) {
 
 #### Example
 
-You can find example [here](example/integration-test/storage_test.go)
+You can find example [here](example/integration-test/postgres_test.go)
