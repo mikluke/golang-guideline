@@ -11,7 +11,7 @@
 
 
 ## Drivers
-Right now there only two production ready and highly used solutions:
+Right now there are only two production ready and highly used solutions:
 * https://github.com/lib/pq 
 * https://github.com/jackc/pgx
 
