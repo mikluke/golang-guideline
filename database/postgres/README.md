@@ -118,3 +118,33 @@ func (p *Postgres) Users(ctx context.Context, limit, offset int) ([]domain.User,
 }
 ```
 
+### InTx
+```go
+func (p *Postgres) InTx(f func(s domain.Storage) error) error {
+ 	conn, ok := p.conn.(*sqlx.DB)
+ 	if !ok {
+ 		return errors.New("connection is not *sqlx.DB, you might be already in transaction")
+ 	}
+
+ 	tx, err := conn.Beginx()
+ 	if err != nil {
+ 		return fmt.Errorf("could not begin tx: %w", err)
+ 	}
+
+ 	if err := f(&Postgres{conn: tx}); err != nil {
+ 		rollbackErr := tx.Rollback()
+ 		if rollbackErr != nil {
+ 			err = multierror.Append(err, rollbackErr)
+ 		}
+
+ 		return err
+ 	}
+
+ 	if err := tx.Commit(); err != nil {
+ 		return fmt.Errorf("could not commit transaction: %w", err)
+ 	}
+
+ 	return nil
+ }
+```
+
