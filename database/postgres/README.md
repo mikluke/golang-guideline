@@ -98,7 +98,7 @@ func (p *Postgres) Users(ctx context.Context, limit, offset int) ([]domain.User,
 	rows, err := p.conn.QueryxContext(
 		ctx,
 		`SELECT id, type, name FROM users LIMIT $1 OFFSET $2`,
-    	limit,
+		limit,
 		offset,
 	)
 	if err != nil {
