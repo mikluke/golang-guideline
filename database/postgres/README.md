@@ -12,15 +12,16 @@
 
 ## Drivers
 Right now there are only two production ready and highly used solutions:
-* https://github.com/lib/pq 
 * https://github.com/jackc/pgx
+* https://github.com/lib/pq
 
 Nevertheless `lib/pq` usage is decreasing and even maintainers recommend to switch to `pgx`.
 
 ## Orm or not
-Overall no. But we are a bit biased here, because we want to reduce code complexity and remove unnecessary abstractions. For simplifying work with sql we recommend to use https://github.com/jmoiron/sqlx. Try to avoid using ORMS until you will really need them. If you are still looking for some, take a look at https://gorm.io
+Overall no. There is no production ready and stable ORMs for go and in long term perspective using one of them will make your code hardly supportable. For simplifying work with sql we recommend to use https://github.com/jmoiron/sqlx.
 
 ## Migrations
+[What is migrations](https://en.wikipedia.org/wiki/Schema_migration)
 * https://github.com/rubenv/sql-migrate
 * https://github.com/golang-migrate/migrate
 
@@ -97,7 +98,7 @@ func (p *Postgres) Users(ctx context.Context, limit, offset int) ([]domain.User,
 	rows, err := p.conn.QueryxContext(
 		ctx,
 		`SELECT id, type, name FROM users LIMIT $1 OFFSET $2`,
-        limit,
+    	limit,
 		offset,
 	)
 	if err != nil {
